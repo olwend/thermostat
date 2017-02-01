@@ -35,4 +35,8 @@ describe('throws error when minimum temp is reached', function() {
             thermostat.decreaseTemp()
         }).toThrowError("minimum temperature has been reached");
     })
+
+    it('has power saving mode on by default', function() {
+    expect(thermostat.isPowerSavingModeOn()).toBe(true);
+  });
 })

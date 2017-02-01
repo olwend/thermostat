@@ -3,6 +3,7 @@
 function Thermostat(){
   this._defaulttemp = 20
   this._minimumtemp = 10
+  this.powerSavingMode = true
 };
 
 Thermostat.prototype.increaseTemp = function() {
@@ -15,5 +16,10 @@ Thermostat.prototype.decreaseTemp = function(){
   }else{
     return this._defaulttemp -= 1;
   }
+
+}
+
+Thermostat.prototype.isPowerSavingModeOn = function(){
+  return this.powerSavingMode === true;
 
 }
