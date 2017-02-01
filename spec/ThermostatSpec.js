@@ -37,15 +37,22 @@ describe('throws error when minimum temp is reached', function() {
         })
 })
 
-describe('Sets power saving to default', function() {
+describe('Switch PSM on and off', function() {
        it('has power saving mode on by default', function() {
             expect(thermostat.isPowerSavingModeOn()).toBe(true);
         })
-    })
-
-describe('Power Saving Mode is switched off', function() {
-    it('Switches off Power Saving Mode', function() {
+        it('Switches off Power Saving Mode', function() {
       thermostat.isPowerSavingModeOff();
       expect(thermostat.isPowerSavingModeOn()).toBe(false);
-    })
+        })
+
+describe('When PSM is on', function(){
+        it('has maximum temperature of 25 degrees', function(){
+          for (var i = thermostat._defaulttemp; i < thermostat._maxPsmThermTemp; i ++){
+            thermostat.increaseTemp();
+
+          }
+          expect(thermostat.getsdefaulttemp()).toEqual(25);
+        })
+})
 })
