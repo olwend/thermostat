@@ -1,58 +1,68 @@
-'use strict'
+'use strict';
 
-var thermostat;
+describe('Thermostat', function() {
 
-beforeEach(function() {
-    thermostat = new Thermostat();
-})
+    var thermostat;
 
-describe('thermostat temperature', function() {
-    it('should be set at 20 degrees', function() {
-            expect(thermostat._defaulttemp).toEqual(20)
-        })
-})
+    beforeEach(function() {
+      thermostat = new Thermostat();
+    });
 
-describe('increase thermostat temperature', function() {
-    it('should increase temp', function() {
-        thermostat.increaseTemp();
-        expect(thermostat._defaulttemp).toEqual(21)
-    })
-})
+    it('starts at 20 degrees', function(){
+      expect(thermostat.getCurrentTemperature()).toEqual(20);
+    });
 
-describe('decrease thermostat temperature', function() {
-    it('should decrease temp', function() {
-        thermostat.decreaseTemp();
-        expect(thermostat._defaulttemp).toEqual(19)
-    })
-})
+    it('increases temperature with up()', function() {
+      thermostat.up();
+      expect(thermostat.getCurrentTemperature()).toEqual(21);
+    });
 
-describe('throws error when minimum temp is reached', function() {
-        it('should throw error if minumum temp is reached', function() {
-            for (var i = thermostat._defaulttemp; i > thermostat._minimumtemp; i--) {
-                thermostat.decreaseTemp();
-            }
-            expect(function() {
-                thermostat.decreaseTemp()
-            }).toThrowError("minimum temperature has been reached");
-        })
-})
+    it('increases temperature with down()', function() {
+      thermostat.down();
+      expect(thermostat.getCurrentTemperature()).toEqual(19);
+    });
 
-describe('Switch PSM on and off', function() {
-       it('has power saving mode on by default', function() {
-            expect(thermostat.isPowerSavingModeOn()).toBe(true);
-        })
-        it('Switches off Power Saving Mode', function() {
-      thermostat.isPowerSavingModeOff();
+    it('has a minimum of 10 degrees', function() {
+      for (var i = 0; i < 10; i++) {
+        thermostat.down();
+      }
+      expect(thermostat.getCurrentTemperature()).toEqual(10);
+    });
+
+    it('has power saving on by default', function(){
+      expect(thermostat.isPowerSavingModeOn()).toBe(true);
+    });
+
+    it('can switch PSM off', function(){
+      thermostat.switchPowerSavingModeOff();
       expect(thermostat.isPowerSavingModeOn()).toBe(false);
-        })
+    });
 
-describe('When PSM is on', function(){
-        it('has maximum temperature of 25 degrees', function(){
-          for (var i = thermostat._defaulttemp; i < thermostat._maxPsmThermTemp; i ++){
-            thermostat.increaseTemp();
+    it('can switch PSM on', function(){
+      thermostat.switchPowerSavingModeOn();
+      expect(thermostat.isPowerSavingModeOn()).toBe(true);
+    });
 
-          }
-          expect(thermostat.getsdefaulttemp()).toEqual(25);
-        })
-})
-})
+    describe('when power saving is on', function(){
+      it ('has a max temperature of 25 degrees', function(){
+        for (var i = 0;  i < 6; i++){
+          thermostat.up();
+        }
+        expect(thermostat.getCurrentTemperature()).toEqual(25);
+      });
+    });
+
+    describe('when power saving is off', function(){
+      it ('has a max temperature of 32 degrees', function(){
+        console.log(thermostat.powerSavingMode);
+        thermostat.switchPowerSavingModeOff();
+          console.log(thermostat.powerSavingMode);
+        for (var i = 0; i < 13; i++) {
+          thermostat.up();
+        }
+        console.log(thermostat.getCurrentTemperature())
+        expect(thermostat.getCurrentTemperature()).toEqual(32);
+      });
+    });
+
+  });
