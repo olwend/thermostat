@@ -52,7 +52,7 @@ Thermostat.prototype.isMaxTemp = function() {
   return this.temperature === this.MAX_TEMP_PSM_ON;
 }
 
-Thermostat.prototype.resetDefault = function(){
+Thermostat.prototype.reset = function(){
   return this.temperature = this.DEFAULT_TEMPERATURE;
 }
 
@@ -64,5 +64,5 @@ Thermostat.prototype.energyUsage = function() {
     return 'medium-usage';
   }
    return 'high-usage';
-  
+
 }
