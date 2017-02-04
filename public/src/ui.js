@@ -3,6 +3,9 @@ $(document).ready(function() {
 
 
        updateTemperature();
+       updatePowerSaveStatus();
+
+
 
        $('#temp-down').click(function(event) {
            thermostat.down();
@@ -21,6 +24,8 @@ $(document).ready(function() {
 
        $('#switchPSM').click(function(event) {
            thermostat.switchPSM();
+           updatePowerSaveStatus();
+           updateTemperature();
         });
 
         function updateTemperature() {
@@ -29,12 +34,15 @@ $(document).ready(function() {
         }
 
         function updatePowerSaveStatus() {
-          if (thermostat.powerSaveStatus === true) {
-              var psNow = 'YES'
+          if (thermostat.powerSavingMode === true) {
+              var psNow = 'YES';
+              console.log(psNow);
             } else {
-              var psNow = 'NO'
+              var psNow = 'NO';
+              console.log(psNow);
             }
-          $('#powersave').text('PowerSave?' + psNow);
+            console.log(psNow);
+          $('#powersave').text((psNow) + ' PowerSave');
           }
 
 });

@@ -40,6 +40,13 @@ describe('Thermostat', function() {
       expect(thermostat.isPowerSavingModeOn()).toBe(true);
     });
 
+    it('has current temperature of 20 when it switches PSM back on', function(){
+      thermostat.switchPSM();
+      thermostat.switchPSM();
+      expect(thermostat.getCurrentTemperature()).toEqual(20);
+    });
+
+
     describe('when power saving is on', function(){
       it ('has a max temperature of 25 degrees', function(){
         for (var i = 0;  i < 6; i++){
@@ -68,32 +75,44 @@ describe('Thermostat', function() {
     });
 
     describe('displaying usage levels', function(){
-      describe('when temperature is below 18 degrees', function(){
+      describe('when temperature is 17 degrees', function(){
         it('it is considered low-usage', function() {
           for (var i = 0; i < 3; i++) {
             thermostat.down();
         }
-        console.log(thermostat.getCurrentTemperature())
         expect(thermostat.energyUsage()).toEqual('low-usage');
         });
       });
 
-      describe('when temperature is between 18 and 25 degrees', function(){
+      describe('when temperature is 20 degrees on start up', function(){
         it('it is considered medium-usage', function() {
-          console.log(thermostat.getCurrentTemperature())
           expect(thermostat.energyUsage()).toEqual('medium-usage');
         });
       });
 
-      describe('when temperature is over 25 degrees', function(){
+      describe('when temperature is 18 degrees', function(){
+        it('it is considered medium-usage', function(){
+          for (var i = 0; i < 2; i++) {
+            thermostat.down();
+          }
+            expect(thermostat.energyUsage()).toEqual('medium-usage');
+        });
+      });
+
+      describe('when temperature is 25 degrees', function(){
+        it('it is considered high-usage', function(){
+          thermostat.temperature = 25
+          expect(thermostat.energyUsage()).toEqual('high-usage');
+        });
+      });
+
+
+      describe('when temperature is 32 degrees', function(){
         it('it is considered high-usage', function() {
           thermostat.powerSavingMode = false;
-          for (var i = 0; i < 6; i++) {
-            thermostat.up();
-        }
-        console.log(thermostat.getCurrentTemperature())
+          thermostat.temperature = 32
         expect(thermostat.energyUsage()).toEqual('high-usage');
+        });
       });
     });
   });
-});

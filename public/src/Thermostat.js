@@ -48,8 +48,10 @@ Thermostat.prototype.switchPowerSavingModeOn = function(){
 Thermostat.prototype.switchPSM = function(){
   if (this.isPowerSavingModeOn()=== false) {
     this.powerSavingMode = true;
+    this.reset();
   } else {
     this.powerSavingMode = false;
+
   }
 }
 
@@ -68,7 +70,7 @@ Thermostat.prototype.energyUsage = function() {
   if (this.temperature < this.MEDIUM_ENERGY_USAGE_LIMIT) {
     return 'low-usage';
   }
-  if (this.temperature > this.MEDIUM_ENERGY_USAGE_LIMIT && this.temperature < this.MAX_TEMP_PSM_ON){
+  if (this.temperature >= this.MEDIUM_ENERGY_USAGE_LIMIT && this.temperature < this.MAX_TEMP_PSM_ON){
     return 'medium-usage';
   }
    return 'high-usage';
