@@ -5,7 +5,7 @@ Thermostat is my first Javascript project and chance to use Jasmine test framewo
 
 It builds upon my first use of Sinatra and CSS/Html whilst extending my familiarity with a TDD object oriented approach.
 
-I may use capybara to extend the test coverage for UI elements. Currently Jasmine tests the back end business logic.
+Future work is to extend the test coverage for UI elements with Karma and Selenium for multi browser compatibility checks. Currently Jasmine tests the back end business logic.
 
 Installation
 ------------
